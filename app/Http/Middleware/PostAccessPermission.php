@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Admin
+class PostAccessPermission
 {
     /**
      * Handle an incoming request.
@@ -15,11 +15,6 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        //@todelete: unused middleware
-        if (Auth()->user()->usertype == 'admin') {
-            return $next($request);
-        }
-
-        abort(401);
+        return $next($request);
     }
 }
