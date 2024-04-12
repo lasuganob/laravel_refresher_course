@@ -11,10 +11,13 @@
     </thead>
     <tbody class="table-group-divider">
         @foreach($posts as $post)
-            @can('show', $post)
             <tr>
                 <th scope="row">{{ $post->id }}</th>
-                <td><a href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a></td>
+                <td>
+                    <a href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a>
+                    <br>
+                    <span class="badge text-bg-secondary mb-4 mt-3">{{ $post->user->name }}</span>
+                </td>
                 <td>
                     @can('update', $post)
                         <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-primary mb-2">Edit</a>
@@ -25,7 +28,6 @@
                     @endcan
                 </td>
             </tr>
-            @endcan
         @endforeach
     </tbody>
 </table>

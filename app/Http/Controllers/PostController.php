@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\Field;
 use Carbon\Carbon;
+use DB;
 
 class PostController extends Controller
 {
@@ -15,7 +16,15 @@ class PostController extends Controller
      */
     public function index(Post $post)
     {
-        $posts = $post->orderBy("created_at","desc")->paginate(10);
+        if(auth()->user()->is_admin) {
+            $posts = $post->orderBy("created_at","desc")->paginate(10);
+        } else {
+            $posts = $post->where('user_id', auth()->user()->id)
+                ->orWhere('status', 1)
+                ->orderBy("created_at", "desc")
+                ->paginate(10);
+        }
+
         return view('posts.index', compact('posts'));
     }
 
@@ -47,7 +56,8 @@ class PostController extends Controller
             ]
             ,[
                 'method' => 'POST',
-                'url' => route('posts.store')
+                'url' => route('posts.store'),
+                'attr' => ['class'=> 'mt-5'],
         ]);
 
         return view('posts.create', compact('form'));
@@ -114,6 +124,7 @@ class PostController extends Controller
             ,[
                 'method' => 'PUT',
                 'url' => route('posts.update',[$post]),
+                'attr' => ['class'=> 'mt-5'],
         ]);
 
         return view('posts.edit', compact('form'));
