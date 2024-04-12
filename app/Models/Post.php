@@ -10,4 +10,11 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'title', 'content', 'status'];
+
+    // relationships
+    public function user()
+    {
+        return $this->hasOne(User::class,'id','user_id');
+    }
 }

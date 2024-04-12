@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\Post;
 
 class PostAccessPermission
 {
@@ -15,6 +16,13 @@ class PostAccessPermission
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        $post_user_id = Post::find($request->post->id)->user_id;
+
+        if(auth()->user()->is_admin == 1 || auth()->user()->id == $post_user_id) {
+            return $next($request);
+        }
+
+        abort(401);
+
     }
 }
