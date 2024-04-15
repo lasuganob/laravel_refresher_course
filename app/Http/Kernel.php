@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\Admin::class,
         'customer' => \App\Http\Middleware\Customer::class,
         'user' => \App\Http\Middleware\PostAccessPermission::class,
+        'sanitizeText' => \App\Http\Middleware\StripTagsFromTextInputRequest::class,
     ];
 }

@@ -14,9 +14,9 @@
     </div>
 
     @can('update', $post)
-        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-primary">Edit</a>
+        <a href="{{ route(role_prefix() . '.posts.edit', $post->id) }}" class="btn btn-sm btn-primary">Edit</a>
     @endcan
     @can('delete', $post)
-        <a href="{{ route('posts.destroy', $post->id) }}" class="btn btn-sm btn-danger">Delete</a>
+        <a href="{{ route(role_prefix() . '.posts.destroy', $post->id) }}" class="btn btn-sm btn-danger">Delete</a>
     @endcan
 @endsection

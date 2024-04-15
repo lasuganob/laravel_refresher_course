@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Admin
+class StripTagsFromTextInputRequest
 {
     /**
      * Handle an incoming request.
@@ -15,11 +15,12 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        //@todelete: unused middleware
-        if (Auth()->user()->is_admin) {
-            return $next($request);
-        }
+        $input = $request->all();
+        array_walk_recursive($input, function (&$input) {
+            $input = strip_tags($input);
+        });
 
-        abort(401);
+        $request->merge($input);
+        return $next($request);
     }
 }

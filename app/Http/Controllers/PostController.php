@@ -5,64 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
-use Kris\LaravelFormBuilder\Field;
 use Carbon\Carbon;
-use DB;
+
+use App\Traits\PostTrait;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Post $post)
-    {
-        if(auth()->user()->is_admin) {
-            $posts = $post->orderBy("created_at","desc")->paginate(10);
-        } else {
-            $posts = $post->where('user_id', auth()->user()->id)
-                ->orWhere('status', 1)
-                ->orderBy("created_at", "desc")
-                ->paginate(10);
-        }
+    use PostTrait;
 
-        return view('posts.index', compact('posts'));
-    }
-
+    // Resources
     /**
      * Show the form for creating a new resource.
      */
     public function create(FormBuilder $formBuilder)
     {
-        $form = $form = $formBuilder->createByArray([
-                [
-                    'name'=> 'title',
-                    'type' => Field::TEXT,
-                ],
-                [
-                    'name'=> 'content',
-                    'type' => Field::TEXTAREA,
-                ],
-                [
-                    'name'=> 'status',
-                    'type' => Field::CHECKBOX,
-                    'label' => 'Check to show post'
-                ],
-                [
-                    'name' => 'submit',
-                    'type' => FIELD::BUTTON_SUBMIT,
-                    'label' => 'Create Post',
-                    'attr' => ['class' => 'btn btn-primary mt-3'],
-                ]
-            ]
-            ,[
-                'method' => 'POST',
-                'url' => route('posts.store'),
-                'attr' => ['class'=> 'mt-5'],
-        ]);
-
+        $form = $this->createPostForm($formBuilder, role_prefix() . '.posts.store');
         return view('posts.create', compact('form'));
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -72,13 +31,8 @@ class PostController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
-        $this->validate($request, [
-            'user_id' => 'required|exists:users,id',
-        ]);
-
-        $post = Post::create($request->all());
-
-        return redirect()->route('posts.index')->with('success_add', 'Post Successfully Added');
+        Post::create($request->all());
+        return redirect()->route(role_prefix() . '.posts.index')->with('success_add', 'Post Successfully Added');
     }
 
     /**
@@ -97,36 +51,7 @@ class PostController extends Controller
      */
     public function edit(Post $post, FormBuilder $formBuilder)
     {
-        $form = $form = $formBuilder->createByArray([
-                [
-                    'name'=> 'title',
-                    'type' => Field::TEXT,
-                    'value' => $post->title,
-                ],
-                [
-                    'name'=> 'content',
-                    'type' => Field::TEXTAREA,
-                    'value' => $post->content,
-                ],
-                [
-                    'name'=> 'status',
-                    'type' => Field::CHECKBOX,
-                    'label' => 'Check to show post',
-                    'checked' => $post->status ? 'checked' : '',
-                ],
-                [
-                    'name' => 'submit',
-                    'type' => FIELD::BUTTON_SUBMIT,
-                    'label' => 'Update Post',
-                    'attr' => ['class' => 'btn btn-primary mt-3'],
-                ]
-            ]
-            ,[
-                'method' => 'PUT',
-                'url' => route('posts.update',[$post]),
-                'attr' => ['class'=> 'mt-5'],
-        ]);
-
+        $form = $this->editPostForm($formBuilder, $post);
         return view('posts.edit', compact('form'));
     }
 
@@ -143,7 +68,7 @@ class PostController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('posts.index')->with('success_edit', 'Post Successfully Edited');
+        return redirect()->route(role_prefix() . '.posts.index')->with('success_edit', 'Post Successfully Edited');
     }
 
     /**
@@ -155,6 +80,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        return redirect()->route('posts.index')->with('success_delete', 'Post Successfully Deleted');
+        return redirect()->route(role_prefix() . '.posts.index')->with('success_delete', 'Post Successfully Deleted');
     }
 }
