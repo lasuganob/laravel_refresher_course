@@ -13,6 +13,16 @@ class PostController extends Controller
 {
     use PostTrait;
 
+    public function storeImageToLocal($request)
+    {
+        $filename = '';
+        if($request->hasFile('featured_image')) {
+            $filename = $request->getSchemeAndHttpHost() . '/assets/img/' . $request->featured_image->hashName() . '.' . $request->featured_image->extension();
+            $request->featured_image->move(public_path('/assets/img/'), $filename);
+        }
+
+        return $filename;
+    }
     // Resources
     /**
      * Show the form for creating a new resource.
@@ -27,11 +37,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge([
-            'user_id' => auth()->user()->id,
+
+        $filename = $this->storeImageToLocal($request);
+
+        Post::create([
+            'user_id'=> auth()->user()->id,
+            'title' => $request->title,
+            'content' => $request->content,
+            'featured_image' => $filename,
+            'status' => $request->status,
         ]);
 
-        Post::create($request->all());
         return redirect()->route(role_prefix() . '.posts.index')->with('success_add', 'Post Successfully Added');
     }
 

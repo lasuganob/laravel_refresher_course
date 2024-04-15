@@ -22,6 +22,12 @@ trait PostTrait {
                 'type' => Field::TEXTAREA,
             ],
             [
+                'name' => 'featured_image',
+                'type' => Field::FILE,
+                'label' => 'Featured Image',
+                'attr' => ['class' => 'mt-3 mb-3']
+            ],
+            [
                 'name'=> 'status',
                 'type' => Field::CHECKBOX,
                 'label' => 'Check to show post'
@@ -36,7 +42,7 @@ trait PostTrait {
         ,[
             'method' => 'POST',
             'url' => route($url),
-            'attr' => ['class'=> 'mt-5'],
+            'attr' => ['class'=> 'mt-5', 'enctype' => 'multipart/form-data'],
         ]);
 
         return $form;
@@ -58,6 +64,13 @@ trait PostTrait {
                 'name'=> 'content',
                 'type' => Field::TEXTAREA,
                 'value' => $post->content,
+            ],
+            [
+                'name' => 'featured_image',
+                'type' => Field::FILE,
+                'label' => 'Featured Image',
+                'attr' => ['class' => 'mt-3 mb-3'],
+                'value' => $post->featured_image,
             ],
             [
                 'name'=> 'status',
