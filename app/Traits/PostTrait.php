@@ -11,7 +11,7 @@ trait PostTrait {
      * Generate create post form
      */
 
-     public function createPostForm($formBuilder, $url) {
+     public function createPostForm($formBuilder)  {
         $form = $formBuilder->createByArray([
             [
                 'name'=> 'title',
@@ -35,7 +35,7 @@ trait PostTrait {
         ]
         ,[
             'method' => 'POST',
-            'url' => route($url),
+            'url' => route(role_prefix() . '.posts.store'),
             'attr' => ['class'=> 'mt-5'],
         ]);
 

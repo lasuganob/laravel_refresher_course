@@ -19,7 +19,7 @@ class PostController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {
-        $form = $this->createPostForm($formBuilder, role_prefix() . '.posts.store');
+        $form = $this->createPostForm($formBuilder);
         return view('posts.create', compact('form'));
     }
     /**
