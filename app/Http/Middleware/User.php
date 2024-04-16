@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Post;
 
-class PostAccessPermission
+class User
 {
     /**
      * Handle an incoming request.
@@ -16,13 +16,12 @@ class PostAccessPermission
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $post_user_id = Post::find($request->post->id)->user_id;
 
-        if(auth()->user()->is_admin == 1 || auth()->user()->id == $post_user_id) {
+        if(!auth()->user()->is_admin) {
             return $next($request);
         }
 
-        abort(401);
+        return redirect()->route('logout');
 
     }
 }

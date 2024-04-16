@@ -1,11 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
-use \App\Http\Controllers\Admin;
-use \App\Http\Controllers\User;
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,40 +28,48 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/',[User\UserPostController::class, 'index'])->name('home');
 
-    //Admin Route
-    Route::namespace('Admin')->prefix('admin')->group(function () {
-        Route::get('/', [Admin\AdminPostController::class, 'index'])->name('admin.posts.index');
+    // Admin Routes
+    Route::middleware('admin')->group(function () {
+        Route::resource('/admin/posts', Admin\AdminPostController::class, [
+            'names' => [
+                'index' => 'admin.posts.index',
+                'show' => 'admin.posts.show',
+                'create' => 'admin.posts.create',
+                'edit' => 'admin.posts.edit',
+                'destroy' => 'admin.posts.destroy',
+            ]
+        ])->except(['store', 'update']);
 
-        Route::prefix('posts')->group(function () {
-            Route::get('/create', [Admin\AdminPostController::class, 'create'])->name('admin.posts.create');
-            Route::post('/', [Admin\AdminPostController::class, 'store'])->middleware('sanitizeText')->name('admin.posts.store');
-            Route::get('/{post}', [Admin\AdminPostController::class, 'show'])->name('admin.posts.show');
-
-            Route::middleware('admin')->group(function () {
-                Route::get('/{post}/edit', [Admin\AdminPostController::class, 'edit'])->name('admin.posts.edit');
-                Route::put('/{post}', [Admin\AdminPostController::class, 'update'])->middleware('sanitizeText')->name('admin.posts.update');
-                Route::get('/{post}/destroy', [Admin\AdminPostController::class, 'destroy'])->name('admin.posts.destroy');
-             });
-         });
-
+        Route::middleware('sanitizeText')->group(function () {
+            Route::resource('/admin/posts', Admin\AdminPostController::class, [
+                'names' => [
+                    'store' => 'admin.posts.store',
+                    'update' => 'admin.posts.update',
+                ]
+            ])->only(['store', 'update']);
+        });
     });
 
     //User Route
-    Route::namespace('User')->prefix('user')->group(function () {
-        Route::get('/', [User\UserPostController::class, 'index'])->name('user.posts.index');
+    Route::middleware('user')->group(function () {
+        Route::resource('/user/posts', User\UserPostController::class, [
+            'names' => [
+                'index' => 'user.posts.index',
+                'show' => 'user.posts.show',
+                'create' => 'user.posts.create',
+                'edit' => 'user.posts.edit',
+                'destroy' => 'user.posts.destroy',
+            ]
+        ])->except(['store', 'update']);
 
-        Route::prefix('posts')->group(function () {
-            Route::get('/create', [User\UserPostController::class, 'create'])->name('user.posts.create');
-            Route::post('/', [User\UserPostController::class, 'store'])->middleware('sanitizeText')->name('user.posts.store');
-            Route::get('/{post}', [User\UserPostController::class, 'show'])->name('user.posts.show');
-
-            Route::middleware('user')->group(function () {
-                Route::get('/{post}/edit', [User\UserPostController::class, 'edit'])->name('user.posts.edit');
-                Route::put('/{post}', [User\UserPostController::class, 'update'])->middleware('sanitizeText')->name('user.posts.update');
-                Route::get('/{post}/destroy', [User\UserPostController::class, 'destroy'])->name('user.posts.destroy');
-             });
-         });
-
+        Route::middleware('sanitizeText')->group(function () {
+            Route::resource('/user/posts', User\UserPostController::class, [
+                'names' => [
+                    'store' => 'user.posts.store',
+                    'update' => 'user.posts.update',
+                ]
+            ])->only(['store', 'update']);
+        });
     });
 
 });

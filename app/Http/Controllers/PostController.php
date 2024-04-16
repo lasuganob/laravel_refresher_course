@@ -27,11 +27,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge([
-            'user_id' => auth()->user()->id,
+
+        Post::create([
+            'user_id'=> auth()->user()->id,
+            'title' => $request->title,
+            'content'=> $request->content,
+            'status'=> $request->status ? $request->status : 0,
         ]);
 
-        Post::create($request->all());
         return redirect()->route(role_prefix() . '.posts.index')->with('success_add', 'Post Successfully Added');
     }
 
@@ -65,7 +68,7 @@ class PostController extends Controller
         $post->update([
             'title' => $request->title,
             'content' => $request->content,
-            'status' => $request->status,
+            'status' => $request->status ? $request->status : 0,
         ]);
 
         return redirect()->route(role_prefix() . '.posts.index')->with('success_edit', 'Post Successfully Edited');

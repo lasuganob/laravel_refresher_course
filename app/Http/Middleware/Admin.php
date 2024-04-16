@@ -15,11 +15,10 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        //@todelete: unused middleware
         if (Auth()->user()->is_admin) {
             return $next($request);
         }
 
-        abort(401);
+        return redirect()->route('logout');
     }
 }
