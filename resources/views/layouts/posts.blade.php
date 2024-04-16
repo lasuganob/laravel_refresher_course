@@ -20,11 +20,15 @@
                 </td>
                 <td>
                     @can('update', $post)
-                        <a href="{{ route(role_prefix() . '.posts.edit', $post->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{{ route(role_prefix() . '.posts.edit', $post) }}" class="btn btn-sm btn-primary">Edit</a>
                     @endcan
 
                     @can('delete', $post)
-                        <a href="{{ route(role_prefix() . '.posts.destroy', $post->id) }}" class="btn btn-sm btn-danger">Delete</a>
+                        <form method="POST" action="{{ route(role_prefix() . '.posts.destroy', $post) }}" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
                     @endcan
                 </td>
             </tr>

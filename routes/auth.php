@@ -54,6 +54,12 @@ Route::middleware('auth')->group(function () {
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
+
+    // handles logout via logout button on navigation
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+                ->name('logout');
+
+    // handles logout by switching role (admin, user) - manual redirection on URL bar
+    Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 });
