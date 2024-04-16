@@ -1,7 +1,17 @@
 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5 mb-3">
     <a class="btn btn-primary me-md-2" type="button" href="{{ route(role_prefix() . '.posts.create') }}">Add Post</a>
 </div>
-<table class="table table-bordered table-stripped table-hover">
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">Manage Posts</div>
+        <div class="card-body">
+            {{ $dataTable->table() }}
+        </div>
+    </div>
+</div>
+
+{{-- <table class="table table-bordered table-stripped table-hover">
     <thead>
         <tr>
             <th scope="col w-10">#</th>
@@ -34,6 +44,6 @@
             </tr>
         @endforeach
     </tbody>
-</table>
+</table> --}}
 
-{{ ($posts) ? $posts->links() : '' }}
+{{-- {{ ($posts) ? $posts->links() : '' }} --}}

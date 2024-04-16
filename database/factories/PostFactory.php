@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
 use App\Models\User;
+use Carbon\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -18,13 +18,11 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $status = [0, 1];
-
         return [
             'user_id' => User::all()->random()->id,
-            'title' => fake()->realText(50),
-            'content' => fake()->paragraphs(rand(2,6)),
-            'status' => Arr::random($status),
+            'title' => fake()->sentence,
+            'content' => fake()->paragraph(30),
+            'status' => rand(0,1),
         ];
     }
 }

@@ -18,7 +18,7 @@ class UserPostController extends PostController
         $posts = $post->where('user_id', auth()->user()->id)
                 ->orWhere('status', 1)
                 ->orderBy("created_at", "desc")
-                ->paginate(10);
+                ->paginate(100);
 
         return view('posts.index', compact('posts'));
     }

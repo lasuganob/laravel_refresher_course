@@ -5,3 +5,7 @@
 
     @include('layouts.posts')
 @endsection
+
+@push('scripts')
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+@endpush

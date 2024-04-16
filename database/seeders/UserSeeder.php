@@ -15,12 +15,12 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $users = User::factory()
-                    ->count(100)
-                    ->hasPosts(rand(2,7))
-                    ->make();
+                    ->count(20)
+                    // ->hasPosts(1)
+                    ->create();
 
-        $users->chunk(10)->each(function ($chunk) {
-            DB::table('users')->insert($chunk->toArray());
-        });
+        // $users->chunk(10)->each(function ($chunk) {
+        //     DB::table('users')->insert($chunk->toArray());
+        // });
     }
 }

@@ -12,6 +12,11 @@ class Post extends Model
 
     protected $fillable = ['user_id', 'title', 'content', 'status'];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     // relationships
     public function user()
     {
