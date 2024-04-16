@@ -22,8 +22,8 @@ class PostFactory extends Factory
 
         return [
             'user_id' => User::all()->random()->id,
-            'title' => fake()->text(),
-            'content' => fake()->realText(),
+            'title' => fake()->realText(50),
+            'content' => fake()->paragraphs(rand(2,6)),
             'status' => Arr::random($status),
         ];
     }
