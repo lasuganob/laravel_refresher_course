@@ -28,6 +28,10 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/',[User\UserPostController::class, 'index'])->name('home');
 
+    // Routes for ajax route call (datatables)
+    Route::get('/admin/posts/data', [Admin\AdminPostController::class, 'getPosts'])->name('admin.posts.data');
+    Route::get('/user/posts/data',[User\UserPostController::class, 'getPosts'])->name('user.posts.data');
+
     // Admin Routes
     Route::middleware('admin')->group(function () {
         Route::resource('/admin/posts', Admin\AdminPostController::class, [

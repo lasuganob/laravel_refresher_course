@@ -7,27 +7,29 @@ use App\Models\Post;
 
 use App\Traits\PostTrait;
 
-use App\DataTables\PostsDataTable;
+use Yajra\DataTables\DataTables;
 
 class AdminPostController extends PostController
 {
     use PostTrait;
-    /**
-     * Display a listing of the resource.
-     */
-    // public function index(Post $post)
-    // {
-    //     $posts = $post->orderBy("created_at","desc")->paginate(10);
-    //     return view('posts.index', compact('posts'));
-    // }
+
+    public function index()
+    {
+        return view('posts.index')->with('posts_url', route("admin.posts.data"));
+    }
 
     /**
-     * Insert datatable on index - trial stage
-     * @param \App\DataTables\PostsDataTable $dataTable
-     * @return mixed
+     * Query posts records for Admin
      */
-    public function index(PostsDataTable $dataTable)
+    public function getPosts(DataTables $dataTables, Post $post)
     {
-        return $dataTable->render('posts.index');
+        $posts = $post->orderBy("created_at", "desc")->with('user');
+
+        return $dataTables->eloquent($posts)
+            ->addColumn('action', function (Post $post) {
+                return view('layouts.datatables.actions', compact('post'));
+            })
+            ->rawColumns((['action']))
+            ->make(true);
     }
 }

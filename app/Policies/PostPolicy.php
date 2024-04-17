@@ -9,14 +9,6 @@ use Illuminate\Auth\Access\Response;
 class PostPolicy
 {
     /**
-     * Determine whether the user can see the model.
-     */
-    public function show(User $user, Post $post): bool
-    {
-        return $user->is_admin || $post->user_id == auth()->id();
-    }
-
-    /**
      * Determine whether the user can update the model.
      */
     public function update(User $user, Post $post): bool
