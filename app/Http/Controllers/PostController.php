@@ -19,8 +19,8 @@ class PostController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {
-        $form = $this->createPostForm($formBuilder);
-        return view('posts.create', compact('form'));
+        // $form = $this->createPostForm($formBuilder);
+        return view('posts.create');
     }
     /**
      * Store a newly created resource in storage.
@@ -54,8 +54,8 @@ class PostController extends Controller
      */
     public function edit(Post $post, FormBuilder $formBuilder)
     {
-        $form = $this->editPostForm($formBuilder, $post);
-        return view('posts.edit', compact('form'));
+        // $form = $this->editPostForm($formBuilder, $post);
+        return view('posts.edit', compact('post'));
     }
 
     /**

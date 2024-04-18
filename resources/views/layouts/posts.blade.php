@@ -40,6 +40,11 @@
                     className: 'action-buttons'
                 },
             ],
+            language: {
+                searchPlaceholder: "Search",
+                search: "",
+                lengthMenu: '<div class="length-options"><div>_MENU_</div> <span>Entries</span></div>'
+            }
         });
     });
 </script>

@@ -27,3 +27,23 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+#posts-table_wrapper .length-options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#posts-table_wrapper .length-options select {
+    appearance: none;
+    /* safari */
+    -webkit-appearance: none;
+    /* other styles for aesthetics */
+    width: 100%;
+    font-size: 0.85rem;
+    background-color: #fff;
+    border: 1px solid #caced1;
+    border-radius: 0.25rem;
+    color: #000;
+    cursor: pointer;
+}
+#posts-table_wrapper .length-options span { margin-left: 10px; }

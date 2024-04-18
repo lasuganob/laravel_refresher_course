@@ -1,6 +1,10 @@
 @extends('posts.layout')
 
 @section('content')
-    <h1 class="page-title text-3xl">Edit Post</h1>
-    {!! form($form) !!}
+    <div class="card mt-5">
+        <h3 class="card-header">Edit Post</h3>
+        <div class="card-body">
+            @livewire('edit-post', ['post' => $post])
+        </div>
+    </div>
 @endsection
