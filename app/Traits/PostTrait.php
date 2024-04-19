@@ -4,6 +4,10 @@ namespace App\Traits;
 
 use Kris\LaravelFormBuilder\Field;
 
+/**
+ * @tobedeleted: Unused Trait
+ * already use livewire for form building
+ */
 trait PostTrait {
     /**
      * @param mixed (FormBuilder Facade, Post instance)

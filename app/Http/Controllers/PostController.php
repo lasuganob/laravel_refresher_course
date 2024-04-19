@@ -7,23 +7,19 @@ use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Carbon\Carbon;
 
-use App\Traits\PostTrait;
-
 class PostController extends Controller
 {
-    use PostTrait;
-
     // Resources
     /**
      * Show the form for creating a new resource.
      */
     public function create(FormBuilder $formBuilder)
     {
-        // $form = $this->createPostForm($formBuilder);
         return view('posts.create');
     }
     /**
      * Store a newly created resource in storage.
+     * @tobedeleted: unused method - already used livewire for storing posts
      */
     public function store(Request $request)
     {
@@ -54,12 +50,12 @@ class PostController extends Controller
      */
     public function edit(Post $post, FormBuilder $formBuilder)
     {
-        // $form = $this->editPostForm($formBuilder, $post);
         return view('posts.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
+     * @tobedeleted: unused method - already used livewire for updating posts
      */
     public function update(Request $request, Post $post)
     {

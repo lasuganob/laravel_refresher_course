@@ -25,6 +25,7 @@ class UserPostController extends PostController
     {
         $posts = $post->where('user_id', auth()->user()->id)
             ->orWhere('status', 1)
+            ->orderByRaw('CASE WHEN user_id = ' . auth()->user()->id . ' THEN 0 ELSE 1 END') // show authored posts first
             ->orderBy("created_at", "desc")->with('user');
 
         return $dataTables->eloquent($posts)
