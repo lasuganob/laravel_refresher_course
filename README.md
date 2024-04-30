@@ -11,7 +11,7 @@
 1. Clone repository and switch to `dev` branch.
 2. Set virtual hosts in laragon settings to `{name}.local`.
 3. Setup DB in `phpmyadmin`, make sure the DB name matches with the `DB_DATABASE` value in `.env`.
-4. Run `npm install` to install dependencies.
+4. Run `composer install` to install dependencies.
 5. Run `php artisan migrate` to build DB Schema.
 6. Run `php artisan db:seed --class="UserSeeder"` to seed users. Assign an `admin` by manually changing it's role in `users` table (you need to login to phpmyadmin to do this). 
 7. Run `php artisan db:seed --class="PostSeeder"` - you might want to modify the number of records to seed, currently it is set to 20000 records.
