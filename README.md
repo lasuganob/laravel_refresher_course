@@ -13,11 +13,9 @@
 3. Setup DB in `phpmyadmin`, make sure the DB name matches with the `DB_DATABASE` value in `.env`.
 5. Run `composer install` & `npm install` to install dependencies.
 6. Run `php artisan key:generate`
-7. Run `php artisan migrate` to build DB Schema.
-8. Run `php artisan db:seed --class="UserSeeder"` to seed users. Assign an `admin` by manually changing it's role in `users` table (you need to login to phpmyadmin to do this). 
-9. Run `php artisan db:seed --class="PostSeeder"` - you might want to modify the number of records to seed, currently it is set to 20000 records.
-10. Run `php artisan serve`.
-11. Run `npm run dev` to compile resources and enable hot reload.
+7. Run `php artisan migrate --seed` to build DB Schema and populate with sample data.
+8. Run `php artisan serve`.
+9. Run `npm run dev` to compile resources and enable hot reload.
 
 ### Additional Notes
 This laravel project still needs to be refactored as this is only my playground for coding, feel free to comment and correct my mistakes or my implementation.
